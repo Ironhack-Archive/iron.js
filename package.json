@@ -1,0 +1,18 @@
+{
+  "name": "thing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "thing.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nizar Khalife Iglesias <khalifenizar@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^6.0.0",
+    "moment": "^2.22.2",
+    "twitter": "^1.7.1",
+    "watson-developer-cloud": "^3.5.0"
+  }
+}
