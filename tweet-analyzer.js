@@ -14,23 +14,23 @@ const {
   TWITTER_BEARER_TOKEN,
   WATSON_URL,
   WATSON_USERNAME,
-  WATSON_PASSWORD
+  WATSON_PASSWORD,
 } = process.env;
 
 const [ ,, screen_name ] = process.argv;
 
 
+var client = new Twitter({
+  consumer_key: TWITTER_CONSUMER_KEY,
+  consumer_secret: TWITTER_CONSUMER_SECRET,
+  bearer_token: TWITTER_BEARER_TOKEN,
+});
+
 var nlu = new NaturalLanguageUnderstandingV1({
   url: WATSON_URL,
   username: WATSON_USERNAME,
   password: WATSON_PASSWORD,
-  version: '2018-03-16'
-});
-
-var client = new Twitter({
-  consumer_key: TWITTER_CONSUMER_KEY,
-  consumer_secret: TWITTER_CONSUMER_SECRET,
-  bearer_token: TWITTER_BEARER_TOKEN
+  version: '2018-03-16',
 });
 
 
@@ -40,7 +40,7 @@ var client = new Twitter({
 client.get('statuses/user_timeline', {
   screen_name,
   include_rts: false,
-  exclude_replies: true
+  exclude_replies: true,
 })
 .then(twitterResponse => {
   const { user, text, created_at } = twitterResponse[0];
@@ -52,7 +52,7 @@ client.get('statuses/user_timeline', {
 
   nlu.analyze({
     features: { emotion: {}, sentiment: {} },
-    text
+    text,
   }, (err, watsonResponse) => {
     if (err) {
       throw err;
@@ -60,7 +60,7 @@ client.get('statuses/user_timeline', {
 
     const {
       sentiment: { document: sentiment },
-      emotion: { document: { emotion } }
+      emotion: { document: { emotion } },
     } = watsonResponse;
 
     printSentiment(sentiment);
