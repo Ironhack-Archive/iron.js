@@ -39,20 +39,21 @@ var nlu = new NaturalLanguageUnderstandingV1({
 // -----------------------------------------------------------------------------
 client.get('statuses/user_timeline', {
   screen_name,
+  tweet_mode: 'extended',
   include_rts: false,
   exclude_replies: true,
 })
 .then(twitterResponse => {
-  const { user, text, created_at } = twitterResponse[0];
+  const { user, full_text, created_at } = twitterResponse[0];
 
-  printTweet(user, text);
+  printTweet(user, full_text);
 
   var date = moment(created_at, 'ddd MMM DD HH:mm:ss ZZ YYYY');
   console.log(date.fromNow());
 
   nlu.analyze({
     features: { emotion: {}, sentiment: {} },
-    text,
+    text: full_text,
   }, (err, watsonResponse) => {
     if (err) {
       throw err;
